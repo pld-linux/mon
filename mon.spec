@@ -5,8 +5,6 @@ Version:	0.99.2
 Release:	2 
 License:	GPL
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/%{name}-%{version}.tar.bz2
 Source1:	%{name}-%{name}.cf
 Source2:	%{name}-%{name}.cgi
