@@ -5,7 +5,7 @@ Summary(pt_BR):	MonitoraГЦo de recursos
 Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
 Version:	0.99.2
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/%{name}-%{version}.tar.bz2
@@ -14,6 +14,7 @@ Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
 Source4:	%{name}.sysconfig
 URL:		http://www.kernel.org/software/mon/
+Requires:	ed
 Requires:	perl-Mon
 Requires:	perl-Time-Period
 Requires:	perl-TimeDate
@@ -87,6 +88,14 @@ faz o mon ser facilmente estendido.
 %setup -q
 
 %build
+# change hardcoded paths in scripts, etc.
+for i in mon doc/mon.8 mon.d/{file_change,http_t*,traceroute,up_rtt}.monitor clients/skymon/skymon clients/monshow ; do 
+ed $i <<EOF
+,s:/usr/local/:/usr/:g
+wq
+EOF
+done
+
 RPM_OPT_FLAGS="%{rpmcflags} -DUSE_VENDOR_CF_PATH=1"; export RPM_OPT_FLAGS
 
 %{__make} all -C mon.d
