@@ -1,5 +1,8 @@
 Summary:	A general-purpose resource monitoring system
+Summary(es):	VerificaciСn de recursos
 Summary(pl):	System monitorowania zasobСw ogСlnego przeznaczenia
+Summary(pt_BR):	MonitoraГЦo de recursos
+Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
 Version:	0.99.2
 Release:	2
@@ -33,6 +36,9 @@ the distribution comes with a handful of them to get you started. This
 means that if a new service needs monitoring, or if a new alert is
 required, the mon server will not need to be changed.
 
+%description -l es
+VerificaciСn de recursos.
+
 %description -l pl
 mon jest systemem monitorowania zasobСw ogСlnego przeznaczenia. Mo©e
 byФ u©ywany do monitorowania dostЙpno╤ci sieci, problemСw z serwerem,
@@ -46,6 +52,37 @@ dystrybucja zawiera pewien ich zestaw na pocz╠tek. To znaczy, ©e
 je©eli nowa usЁuga potrzebuje monitorowania lub potrzebny jest nowy
 alarm, serwer mon nie musi byФ zmieniany.
 
+%description -l pt_BR
+Mon И um sistema de propСsito geral para monitoraГЦo de recursos, o
+qual pode ser usado para monitorar a disponibilidade de serviГos de
+uma rede, problemas em servidores, condiГУes ambientais, etc
+
+A monitoraГЦo de recursos pode ser vista como duas tarefas separadas:
+o teste de uma condiГЦo e a aГЦo a ser tomada em caso de falha. O mon
+foi projetado para fazer estas duas duas tarefas separadas usando
+programas independentes, e foi implementado como um escalonador que
+executa os monitores (que testam uma condiГЦo), e chama os alertas
+apropriados se o monitor falhar.
+
+Monitores e alertas nЦo fazem parte do mon, apesar de que uma sИrie
+deles vem neste pacote, sendo Зteis para comeГar a usА-lo. Isto
+significa que se um novo serviГo necessita de monitoraГЦo, ou se um
+novo alerta И requerido, o servidor mon nЦo precisa ser alterado. Isto
+faz o mon ser facilmente estendido.
+
+%description -l ru
+"mon" - инструмент для мониторинга доступности сервисов. Сервисы могут
+быть сетевыми, состоянием окружения, или чем угодно похожим, что можно
+протестировать программно. Он чрезвычайно полезен для системных
+администраторов, но не ограничивается использованием только ими. Он
+разработан как основная система оповещения об авариях, разделяя задачи
+тестирования сервисов на доступность и отправку тревожных сообщений,
+когда что-то не работает. Для достижения этого "mon" реализован как
+диспетчер, который запускает программы, которые выполняют
+тестирование, и запускает программы предупреждения, когда скрипты
+обнаруживают сбои. Ни один из сервисов не обрабатывается собственно
+"mon"'ом. Эти функции обрабатываются соответствующими программами.
+
 %prep
 %setup -q
 
@@ -56,9 +93,9 @@ RPM_OPT_FLAGS="%{rpmcflags} -DUSE_VENDOR_CF_PATH=1"; export RPM_OPT_FLAGS
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/{%{name},rc.d/init.d,sysconfig,mon}
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/{man1,man8},%{_libdir}/mon/{alert.d,mon.d}}
-install -d $RPM_BUILD_ROOT/var/lib/mon/{state.d,log.d}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},/etc/{rc.d/init.d,sysconfig,mon}} \
+	$RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man{1,8},%{_libdir}/mon/{alert.d,mon.d}} \
+	$RPM_BUILD_ROOT/var/lib/mon/{state.d,log.d}
 
 install mon 		$RPM_BUILD_ROOT%{_bindir}
 install clients/moncmd 	$RPM_BUILD_ROOT%{_bindir}
