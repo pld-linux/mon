@@ -5,7 +5,7 @@ Summary(pt_BR):	MonitoraГЦo de recursos
 Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
 Version:	0.99.2
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/%{name}-%{version}.tar.bz2
@@ -14,8 +14,9 @@ Source1:	%{name}-%{name}.cf
 Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
 Source4:	%{name}.sysconfig
+Patch0:		%{name}-debian.patch
 URL:		http://www.kernel.org/software/mon/
-BuildRequires:	ed
+BuildRequires:	sed >= 4.0.0
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires:	perl-Mon
@@ -88,19 +89,19 @@ faz o mon ser facilmente estendido.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 # change hardcoded paths in scripts, etc.
 for i in mon doc/mon.8 mon.d/{file_change,http_t*,traceroute,up_rtt}.monitor clients/skymon/skymon clients/monshow ; do
-ed $i <<EOF
-,s:/usr/local/:/usr/:g
-wq
-EOF
+	sed -i -e 's#/usr/local/#%{_prefix}/#g' $i
 done
 
 RPM_OPT_FLAGS="%{rpmcflags} -DUSE_VENDOR_CF_PATH=1"; export RPM_OPT_FLAGS
 
-%{__make} all -C mon.d
+%{__make} all \
+	-C mon.d \
+	CC="%{__cc}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
