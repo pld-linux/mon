@@ -121,8 +121,8 @@ touch 			$RPM_BUILD_ROOT%{_sysconfdir}/mon/userfile
 #install -m 755 %{SOURCE2} $RPM_BUILD_ROOT/var/www/cgi-bin/
 
 install %{SOURCE1} 	$RPM_BUILD_ROOT%{_sysconfdir}/mon/mon.cf
-install %{SOURCE3} 	$RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/%{name}
-install %{SOURCE4} 	$RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
+install %{SOURCE3} 	$RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+install %{SOURCE4} 	$RPM_BUILD_ROOT/etc/sysconfig/%{name}
 
 tar czf skymon.tar.gz clients/skymon
 tar czf etc.tar.gz etc/[a-z]*
@@ -151,8 +151,8 @@ fi
 %doc [A-Z]* doc/[A-Z]* skymon.tar.gz etc.tar.gz
 %dir %{_sysconfdir}/mon
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mon/*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/mon
-%attr(754,root,root) %{_sysconfdir}/rc.d/init.d/mon
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/mon
+%attr(754,root,root) /etc/rc.d/init.d/mon
 %attr(755,root,root) %{_bindir}/*
 %dir %{_libdir}/mon
 %dir %{_libdir}/mon/*.d
