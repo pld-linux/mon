@@ -159,6 +159,7 @@ fi
 %dir %{_libdir}/mon
 %dir %{_libdir}/mon/*.d
 %attr(755,root,root) %{_libdir}/mon/*.d/*
+%dir /var/lib/mon
 %dir /var/lib/mon/state.d
 %dir /var/lib/mon/log.d
 %{_mandir}/man?/*
