@@ -5,7 +5,7 @@ Summary(pt_BR):	MonitoraГЦo de recursos
 Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
 Version:	0.99.2
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/%{name}-%{version}.tar.bz2
@@ -147,7 +147,8 @@ fi
 %attr(754,root,root) %{_sysconfdir}/rc.d/init.d/mon
 %attr(755,root,root) %{_bindir}/*
 %dir %{_libdir}/mon
-%attr(755,root,root) %{_libdir}/mon/*/*
+%dir %{_libdir}/mon/*.d/*
+%attr(755,root,root) %{_libdir}/mon/*.d/*
 %dir /var/lib/mon/state.d
 %dir /var/lib/mon/log.d
 %{_mandir}/man?/*
