@@ -135,17 +135,17 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/chkconfig --add %{name}
 if [ -f /var/lock/subsys/mon ]; then
-        /etc/rc.d/init.d/mon reload 1>&2
+	/etc/rc.d/init.d/mon reload 1>&2
 else
-        echo "Type \"/etc/rc.d/init.d/mon start\" to start inet server" 1>&2
+	echo "Type \"/etc/rc.d/init.d/mon start\" to start inet server" 1>&2
 fi
 
 %preun
 if [ "$1" = "0" ]; then
-        if [ -f /var/lock/subsys/mon ]; then
-                /etc/rc.d/init.d/mon stop >&2
-        fi
-        /sbin/chkconfig --del %{name}
+	if [ -f /var/lock/subsys/mon ]; then
+		/etc/rc.d/init.d/mon stop >&2
+	fi
+	/sbin/chkconfig --del %{name}
 fi
 
 %files
