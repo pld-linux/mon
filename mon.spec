@@ -91,7 +91,7 @@ faz o mon ser facilmente estendido.
 
 %build
 # change hardcoded paths in scripts, etc.
-for i in mon doc/mon.8 mon.d/{file_change,http_t*,traceroute,up_rtt}.monitor clients/skymon/skymon clients/monshow ; do 
+for i in mon doc/mon.8 mon.d/{file_change,http_t*,traceroute,up_rtt}.monitor clients/skymon/skymon clients/monshow ; do
 ed $i <<EOF
 ,s:/usr/local/:/usr/:g
 wq
