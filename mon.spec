@@ -146,7 +146,7 @@ fi
 %attr(754,root,root) %{_sysconfdir}/rc.d/init.d/mon
 %attr(755,root,root) %{_bindir}/*
 %dir %{_libdir}/mon
-%dir %{_libdir}/mon/*.d/*
+%dir %{_libdir}/mon/*.d
 %attr(755,root,root) %{_libdir}/mon/*.d/*
 %dir /var/lib/mon/state.d
 %dir /var/lib/mon/log.d
