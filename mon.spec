@@ -16,13 +16,14 @@ Source3:	%{name}.init
 Source4:	%{name}.sysconfig
 URL:		http://www.kernel.org/software/mon/
 BuildRequires:	ed
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 Requires:	perl-Mon
 Requires:	perl-Time-Period
 Requires:	perl-TimeDate
 Requires:	perl-Time-HiRes
 Requires:	perl-Convert-BER
 Requires:	perl-Net-Telnet
-Prereq:		/sbin/chkconfig
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
