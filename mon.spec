@@ -1,13 +1,14 @@
-Summary:	A general-purpose resource monitoring system.
+Summary:	A general-purpose resource monitoring system
+Summary(pl):	System monitorowania zasobów ogólnego przeznaczenia
 Name:		mon 
 Version:	0.99.2
-Release:	1 
+Release:	2 
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/%{name}-%{version}.tar.bz2
 Source1:	%{name}-%{name}.cf
 Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
 Source4:	%{name}.sysconfig
-Url:		http://www.kernel.org/software/mon/
+URL:		http://www.kernel.org/software/mon/
 License:	GPL
 Group:		Applications/System	
 Requires:	perl-Mon                  
@@ -15,7 +16,8 @@ Requires:	perl-Time-Period
 Requires:	perl-TimeDate           
 Requires:	perl-Time-HiRes        
 Requires:	perl-Convert-BER      
-Requires:	perl-Net-Telnet       
+Requires:	perl-Net-Telnet
+Prereq:		/sbin/chkconfig
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -31,8 +33,21 @@ the distribution comes with a handful of them to get you started. This
 means that if a new service needs monitoring, or if a new alert is
 required, the mon server will not need to be changed.
 
+%description -l pl
+mon jest systemem monitorowania zasobów ogólnego przeznaczenia. Mo¿e
+byæ u¿ywany do monitorowania dostêpno¶ci sieci, problemów z serwerem,
+warunków ¶rodowiska (np. temperatury) i innych. Mo¿e byæ u¿ywany do
+sprawdzania warunków i/lub uruchamiania jakiej¶ akcji po wykryciu
+awarii. Akcje te s± podejmowane przez uruchamianie oddzielnych
+programów.
+
+mon jest rozszerzalny. Monitory i alarmy nie s± czê¶ci± mona, ale
+dystrybucja zawiera pewien ich zestaw na pocz±tek. To znaczy, ¿e
+je¿eli nowa us³uga potrzebuje monitorowania lub potrzebny jest nowy
+alarm, serwer mon nie musi byæ zmieniany.
+
 %prep
-%setup0 -q 
+%setup -q 
 
 %build
 export RPM_OPT_FLAGS="$RPM_OPT_FLAGS -DUSE_VENDOR_CF_PATH=1"
@@ -71,7 +86,6 @@ tar czf etc.tar.gz etc/[a-z]*
 rm -rf $RPM_BUILD_ROOT
 
 %post
-
 /sbin/chkconfig --add %{name}
 if [ -f /var/lock/subsys/mon ]; then
         /etc/rc.d/init.d/mon reload 1>&2
