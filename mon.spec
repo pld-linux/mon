@@ -5,7 +5,7 @@ Summary(pt_BR):	MonitoraГЦo de recursos
 Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
 Version:	0.99.2
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/%{name}-%{version}.tar.bz2
