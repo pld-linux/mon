@@ -1,0 +1,60 @@
+#!/bin/sh
+#
+# mon		system monitoring daemon	
+#
+# chkconfig:	345 85 15
+# description: 	system monitoring daemon 
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get service config
+[ -f /etc/sysconfig/mon ] && . /etc/sysconfig/mon
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+        if [ ! -f /var/lock/subsys/mon ]; then
+		msg_starting mon
+		daemon mon $MON_OPTS -c /etc/mon/mon.cf -f
+	        RETVAL=$?
+    		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/mon
+	else
+        	msg_Already_Running mon
+	        exit 1
+	fi
+	;;
+  stop)
+        # Stop daemons.
+	if [ -f /var/lock/subsys/mon ]; then
+                msg_stopping mon
+                killproc mon
+                rm -f /var/lock/subsys/mon > /dev/null 2>&1
+        else
+		msg_Not_Running mon
+	        exit 1
+	fi
+	;;
+  status)
+	status mon
+	RETVAL=$?
+	exit $RETVAL
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  reload)
+	msg_reloading mon
+	killproc mon -HUP
+	RETVAL=$?
+	;;
+  *)
+	msg_Usage "$0 {start|stop|restart|status}"
+	exit 1
+	;;
+esac
+
+exit $RETVAL
+

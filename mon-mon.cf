@@ -1,0 +1,56 @@
+#
+# Extremely basic mon.cf file
+#
+#
+# global options
+#
+cfbasedir   = /etc/mon 
+pidfile     = /var/run/mon.pid
+statedir    = /var/lib/mon/state.d
+logdir      = /var/lib/mon/log.d
+dtlogfile   = /var/lib/mon/log.d/downtime.log
+alertdir    = /usr/lib/mon/alert.d
+mondir      = /usr/lib/mon/mon.d
+maxprocs    = 20
+histlength  = 100
+randstart   = 60s
+authtype    = userfile
+userfile    = /etc/mon/userfile
+
+#
+# group definitions (hostnames or IP addresses)
+#
+hostgroup servers localhost
+
+watch servers
+    service ping
+	interval 5m
+	monitor ping.monitor
+	period wd {Mon-Fri} hr {7am-10pm}
+	    alert mail.alert root@localhost
+	    alertevery 1h
+	period wd {Sat-Sun}
+	    alert mail.alert root@localhost 
+    service telnet
+	interval 10m
+	monitor telnet.monitor
+	period wd {Mon-Fri} hr {7am-10pm}
+	    alertevery 1h
+	    alertafter 2 30m
+	    alert mail.alert root@localhost
+   service http 
+        interval 4m 
+        monitor http.monitor 
+        allow_empty_group 
+        period wd {Sun-Sat} 
+            upalert mail.alert -S "web server is back up" mis 
+            alertevery 45m 
+    service smtp 
+        interval 10m 
+        monitor smtp.monitor 
+        period wd {Mon-Fri} hr {7am-10pm} 
+            alertevery 1h 
+            alertafter 2 30m 
+            alert qpage.alert mis-pagers@domain.com 
+
+# See /usr/doc for the original example...
