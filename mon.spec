@@ -1,30 +1,26 @@
+%include	/usr/lib/rpm/macros.perl
 Summary:	A general-purpose resource monitoring system
 Summary(es):	VerificaciСn de recursos
 Summary(pl):	System monitorowania zasobСw ogСlnego przeznaczenia
 Summary(pt_BR):	MonitoraГЦo de recursos
 Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
-Version:	0.99.2
-Release:	6
+Version:	1.0.0
+%define	_rc	pre4
+Release:	0.%{_rc}.1
 License:	GPL
 Group:		Applications/System
-Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/%{name}-%{version}.tar.bz2
-# Source0-md5:	61dbaed4ab89e952650339a55dd9f1dc
+Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/devel/%{name}-%{version}%{_rc}.tar.bz2
+# Source0-md5:	1dd528b6442dc5a063e203ec0293dc55
 Source1:	%{name}-%{name}.cf
 Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
 Source4:	%{name}.sysconfig
-Patch0:		%{name}-debian.patch
 URL:		http://www.kernel.org/software/mon/
 BuildRequires:	sed >= 4.0.0
+BuildRequires:	rpm-perlprov
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
-Requires:	perl-Mon
-Requires:	perl-Time-Period
-Requires:	perl-TimeDate
-Requires:	perl-Time-HiRes
-Requires:	perl-Convert-BER
-Requires:	perl-Net-Telnet
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -88,8 +84,7 @@ faz o mon ser facilmente estendido.
 "mon"'ом. Эти функции обрабатываются соответствующими программами.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup -q -n %{name}-%{version}%{_rc}
 
 %build
 # change hardcoded paths in scripts, etc.
