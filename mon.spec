@@ -14,7 +14,7 @@ Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
 Source4:	%{name}.sysconfig
 URL:		http://www.kernel.org/software/mon/
-Requires:	ed
+BuildRequires:	ed
 Requires:	perl-Mon
 Requires:	perl-Time-Period
 Requires:	perl-TimeDate
