@@ -24,7 +24,7 @@ Requires:	perl-TimeDate
 Requires:	perl-Time-HiRes
 Requires:	perl-Convert-BER
 Requires:	perl-Net-Telnet
-Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Mon is a general-purpose resource monitoring system. It can be used to
