@@ -6,12 +6,12 @@ Summary(pt_BR):	MonitoraГЦo de recursos
 Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
 Version:	1.0.0
-%define	_rc	pre4
+%define	_rc	pre5
 Release:	0.%{_rc}.1
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/devel/%{name}-%{version}%{_rc}.tar.bz2
-# Source0-md5:	1dd528b6442dc5a063e203ec0293dc55
+# Source0-md5:	c95f371ee5fa767e1b6303187f5b4735
 Source1:	%{name}-%{name}.cf
 Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
