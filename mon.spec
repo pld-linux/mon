@@ -1,6 +1,6 @@
 Summary:	A general-purpose resource monitoring system.
 Name:		mon 
-Version:	0.99.1 
+Version:	0.99.2
 Release:	1 
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/%{name}-%{version}.tar.bz2
 Source1:	%{name}-%{name}.cf
