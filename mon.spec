@@ -115,7 +115,6 @@ install %{SOURCE1} 	$RPM_BUILD_ROOT%{_sysconfdir}/mon/mon.cf
 install %{SOURCE3} 	$RPM_BUILD_ROOT%{_sysconfdir}/rc.d/init.d/%{name}
 install %{SOURCE4} 	$RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
 
-gzip -9nf [A-Z]* doc/[A-Z]*
 tar czf skymon.tar.gz clients/skymon
 tar czf etc.tar.gz etc/[a-z]*
 
@@ -140,7 +139,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz doc/*.gz
+%doc [A-Z]* doc/[A-Z]* skymon.tar.gz etc.tar.gz
 %dir %{_sysconfdir}/mon
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mon/*
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/mon
