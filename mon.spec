@@ -1,8 +1,8 @@
 Summary:	A general-purpose resource monitoring system
 Summary(pl):	System monitorowania zasobów ogólnego przeznaczenia
-Name:		mon 
+Name:		mon
 Version:	0.99.2
-Release:	2 
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/%{name}-%{version}.tar.bz2
@@ -11,11 +11,11 @@ Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
 Source4:	%{name}.sysconfig
 URL:		http://www.kernel.org/software/mon/
-Requires:	perl-Mon                  
-Requires:	perl-Time-Period	
-Requires:	perl-TimeDate           
-Requires:	perl-Time-HiRes        
-Requires:	perl-Convert-BER      
+Requires:	perl-Mon
+Requires:	perl-Time-Period
+Requires:	perl-TimeDate
+Requires:	perl-Time-HiRes
+Requires:	perl-Convert-BER
 Requires:	perl-Net-Telnet
 Prereq:		/sbin/chkconfig
 Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -47,7 +47,7 @@ je¿eli nowa us³uga potrzebuje monitorowania lub potrzebny jest nowy
 alarm, serwer mon nie musi byæ zmieniany.
 
 %prep
-%setup -q 
+%setup -q
 
 %build
 RPM_OPT_FLAGS="%{rpmcflags} -DUSE_VENDOR_CF_PATH=1"; export RPM_OPT_FLAGS
@@ -64,8 +64,8 @@ install mon 		$RPM_BUILD_ROOT%{_bindir}
 install clients/moncmd 	$RPM_BUILD_ROOT%{_bindir}
 install clients/monshow $RPM_BUILD_ROOT%{_bindir}
 install clients/skymon/skymon $RPM_BUILD_ROOT%{_bindir}
-install doc/*.1 	$RPM_BUILD_ROOT%{_mandir}/man1 
-install doc/*.8 	$RPM_BUILD_ROOT%{_mandir}/man8 
+install doc/*.1 	$RPM_BUILD_ROOT%{_mandir}/man1
+install doc/*.8 	$RPM_BUILD_ROOT%{_mandir}/man8
 install alert.d/* 	$RPM_BUILD_ROOT%{_libdir}/mon/alert.d
 install mon.d/*.monitor	$RPM_BUILD_ROOT%{_libdir}/mon/mon.d
 install etc/auth.cf 	$RPM_BUILD_ROOT%{_sysconfdir}/mon/auth.cf
@@ -105,7 +105,7 @@ fi
 %defattr(644,root,root,755)
 %doc *.gz doc/*.gz
 %dir %{_sysconfdir}/mon
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mon/* 
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mon/*
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/mon
 %attr(754,root,root) %{_sysconfdir}/rc.d/init.d/mon
 %attr(755,root,root) %{_bindir}/*
