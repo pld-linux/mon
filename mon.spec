@@ -148,8 +148,8 @@ fi
 %defattr(644,root,root,755)
 %doc [A-Z]* doc/[A-Z]* skymon.tar.gz etc.tar.gz
 %dir %{_sysconfdir}/mon
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mon/*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/mon
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mon/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/mon
 %attr(754,root,root) /etc/rc.d/init.d/mon
 %attr(755,root,root) %{_bindir}/*
 %dir %{_libdir}/mon
