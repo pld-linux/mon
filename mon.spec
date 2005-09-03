@@ -5,13 +5,13 @@ Summary(pl):	System monitorowania zasobСw ogСlnego przeznaczenia
 Summary(pt_BR):	MonitoraГЦo de recursos
 Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
-Version:	1.0.0
-%define	_rc	pre5
+Version:	1.1.0
+%define	_rc	pre1
 Release:	0.%{_rc}.1
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/devel/%{name}-%{version}%{_rc}.tar.bz2
-# Source0-md5:	c95f371ee5fa767e1b6303187f5b4735
+# Source0-md5:	cec4079e8bcb8461e6c876c89cf2a01f
 Source1:	%{name}-%{name}.cf
 Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
@@ -85,6 +85,8 @@ faz o mon ser facilmente estendido.
 
 %prep
 %setup -q -n %{name}-%{version}%{_rc}
+
+find -name CVS -type d | xargs rm -rf
 
 %build
 # change hardcoded paths in scripts, etc.
