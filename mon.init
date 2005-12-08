@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# mon		system monitoring daemon	
+# mon		system monitoring daemon
 #
 # chkconfig:	345 85 15
-# description: 	system monitoring daemon 
+# description: 	system monitoring daemon
 
 # Source function library
 . /etc/rc.d/init.d/functions
