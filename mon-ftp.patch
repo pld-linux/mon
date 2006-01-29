@@ -1,0 +1,28 @@
+diff -urN mon-1.1.0pre1.org/mon.d/ftp.monitor mon-1.1.0pre1/mon.d/ftp.monitor
+--- mon-1.1.0pre1.org/mon.d/ftp.monitor	2004-06-09 07:18:05.000000000 +0200
++++ mon-1.1.0pre1/mon.d/ftp.monitor	2006-01-29 15:19:39.406145500 +0100
+@@ -171,14 +171,16 @@
+ 	print S "quit\r\n";
+ 	$result->{"detail"} .= "    > quit\n";
+ 
+-	$in = <S>;
+-	$result->{"detail"} .= "    < $in";
+-	if ($in !~ /^221 /) {
+-	    alarm 0;
+-	    $result->{"ok"} = 0;
+-	    $result->{"error"} = "FTP server error after quit";
+-	    close(S);
+-	    return undef;
++	while ($in = <S>) {
++		$result->{"detail"} .= "    < $in";
++		next if ($in =~ /^[0-9]{3}\-/);
++		if ($in !~ /^221 /) {
++			alarm 0;
++			$result->{"ok"} = 0;
++			$result->{"error"} = "FTP server error after quit";
++			close(S);
++			return undef;
++		}
+ 	}
+ 
+ 	close(S);
