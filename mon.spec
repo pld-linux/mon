@@ -7,7 +7,7 @@ Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
 Version:	1.1.0
 %define	_rc	pre1
-Release:	0.%{_rc}.1
+Release:	0.%{_rc}.2
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/devel/%{name}-%{version}%{_rc}.tar.bz2
@@ -16,6 +16,7 @@ Source1:	%{name}-%{name}.cf
 Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
 Source4:	%{name}.sysconfig
+Patch0:		%{name}-ftp.patch
 URL:		http://www.kernel.org/software/mon/
 BuildRequires:	sed >= 4.0.0
 BuildRequires:	rpm-perlprov
@@ -85,6 +86,7 @@ faz o mon ser facilmente estendido.
 
 %prep
 %setup -q -n %{name}-%{version}%{_rc}
+%patch0 -p1
 
 find -name CVS -type d | xargs rm -rf
 
