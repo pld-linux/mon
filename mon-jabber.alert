@@ -1,0 +1,126 @@
+#!/usr/bin/python -u
+# arekm@pld-linux.org, 01/2006
+# usage:
+# jabber.alert -J from_jid -P password to_jid1 to_jid2 to_jid3
+
+import os
+import re
+import sys
+import getopt
+import string
+import time
+
+from pyxmpp.jid import JID
+from pyxmpp.message import Message
+from pyxmpp.jabber.client import JabberClient
+
+try:
+	opts, args = getopt.getopt(sys.argv[1:], "s:o:g:h:k:t:J:P:OTu")
+except getopt.GetoptError, e:
+	print "%s: %s " % (sys.argv[0], e)
+	sys.exit(1)
+
+service = ""
+group = ""
+hosts = ""
+alertevery = ""
+o_option = False
+time_failed = ""
+
+time_last_failure = 0
+mlf = os.getenv("MON_LAST_FAILURE")
+if mlf:
+	time_last_failure = time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime(int(mlf)))
+
+time_first_failure = 0
+mff = os.getenv("MON_FIRST_FAILURE")
+if mff:
+	time_first_failure = time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime(int(mff)))
+
+t_option = False
+u_option = False
+
+jid = None
+password = None
+
+for o, a in opts:
+	if o == '-J':
+		jid = a
+	if o == '-P':
+		password = a
+	if o == '-s':
+		service = a
+	if o == '-g':
+		group = a
+	if o == '-h':
+		hosts = a
+	if o == '-l':
+		alertevery = a
+	if o == '-O':
+		o_option = True
+	if o == '-t':
+		time_failed = time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime(int(a)))
+	if o == '-T':
+		t_option = True
+	if o == '-u':
+		u_option = True
+
+recpt = args
+
+if jid == None or password == None:
+	print "%s: jid (-J) and password (-P) are required" % sys.argv[0]
+	sys.exit(1)
+
+if recpt == None:
+	print "%s: recipient jids are required" % sys.argv[0]
+	sys.exit(1)
+
+
+subject = ""
+if u_option:
+	subject += "UPALERT at " + time_failed + " for group: " + group + ", host: " + hosts
+else:
+	subject += "DOWNALERT at " + time_failed + " for group: " + group + ", host: " + hosts
+
+server = None
+port = None
+
+body = subject + '\n'
+if time_last_failure > 0:
+	body += "First failure: %s\n" % time_last_failure
+	body += "Last failure : %s\n" % time_last_failure
+
+stdin_body = ""
+do_print = True
+for line in sys.stdin.readlines():
+	if re.compile('^HOST .*: ok$').match(line):
+		stdin_body += line
+		do_print = False
+	elif re.compile('^HOST .*:.*$').match(line):
+		do_print = True
+	if do_print:
+		stdin_body += line
+
+body += stdin_body
+
+message_type = 'chat'
+
+jid=JID(jid)
+if not jid.resource:
+	jid=JID(jid.node,jid.domain,"Monitor")
+
+class Client(JabberClient):
+	def session_started(self):
+		for r in recpt:
+			jid_r = JID(r)
+			msg=Message(to_jid=jid_r, body=body, subject=subject, stanza_type=message_type)
+			self.stream.send(msg)
+		self.disconnect()
+c=Client(jid,password,server=server,port=port)
+c.connect()
+try:
+	c.loop(1)
+except:
+	print "problem: %s" % e
+	c.disconnect()
+c.disconnect()
