@@ -7,7 +7,7 @@ Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
 Version:	1.1.0
 %define	_rc	pre1
-Release:	0.%{_rc}.2
+Release:	0.%{_rc}.3
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/devel/%{name}-%{version}%{_rc}.tar.bz2
@@ -16,6 +16,7 @@ Source1:	%{name}-%{name}.cf
 Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
 Source4:	%{name}.sysconfig
+Source5:	%{name}-jabber.alert
 Patch0:		%{name}-ftp.patch
 URL:		http://www.kernel.org/software/mon/
 BuildRequires:	sed >= 4.0.0
@@ -114,7 +115,7 @@ install clients/monshow $RPM_BUILD_ROOT%{_bindir}
 install clients/skymon/skymon $RPM_BUILD_ROOT%{_bindir}
 install doc/*.1 	$RPM_BUILD_ROOT%{_mandir}/man1
 install doc/*.8 	$RPM_BUILD_ROOT%{_mandir}/man8
-install alert.d/* 	$RPM_BUILD_ROOT%{_libdir}/mon/alert.d
+install %{SOURCE5} alert.d/* 	$RPM_BUILD_ROOT%{_libdir}/mon/alert.d
 install mon.d/*.monitor	$RPM_BUILD_ROOT%{_libdir}/mon/mon.d
 install etc/auth.cf 	$RPM_BUILD_ROOT%{_sysconfdir}/mon/auth.cf
 touch 			$RPM_BUILD_ROOT%{_sysconfdir}/mon/userfile
