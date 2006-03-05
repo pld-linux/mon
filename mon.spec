@@ -1,4 +1,5 @@
 %include	/usr/lib/rpm/macros.perl
+%define	_rc	pre1
 Summary:	A general-purpose resource monitoring system
 Summary(es):	Verificación de recursos
 Summary(pl):	System monitorowania zasobów ogólnego przeznaczenia
@@ -6,7 +7,6 @@ Summary(pt_BR):	Monitoração de recursos
 Summary(ru):	"mon" - ÉÎÓÔÒÕÍÅÎÔ ÄÌÑ ÍÏÎÉÔÏÒÉÎÇÁ ÄÏÓÔÕÐÎÏÓÔÉ ÓÅÒ×ÉÓÏ×
 Name:		mon
 Version:	1.1.0
-%define	_rc	pre1
 Release:	0.%{_rc}.3
 License:	GPL
 Group:		Applications/System
@@ -19,10 +19,11 @@ Source4:	%{name}.sysconfig
 Source5:	%{name}-jabber.alert
 Patch0:		%{name}-ftp.patch
 URL:		http://www.kernel.org/software/mon/
-BuildRequires:	sed >= 4.0.0
 BuildRequires:	rpm-perlprov
-PreReq:		rc-scripts
+BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	sed >= 4.0
 Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -135,17 +136,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add %{name}
-if [ -f /var/lock/subsys/mon ]; then
-	/etc/rc.d/init.d/mon reload 1>&2
-else
-	echo "Type \"/etc/rc.d/init.d/mon start\" to start inet server" 1>&2
-fi
+%service mon restart
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/mon ]; then
-		/etc/rc.d/init.d/mon stop >&2
-	fi
+	%service mon stop
 	/sbin/chkconfig --del %{name}
 fi
 
