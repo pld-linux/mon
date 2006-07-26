@@ -7,7 +7,7 @@ Summary(pt_BR):	MonitoraГЦo de recursos
 Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
 Version:	1.1.0
-Release:	0.%{_rc}.3
+Release:	0.%{_rc}.4
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/devel/%{name}-%{version}%{_rc}.tar.bz2
@@ -17,6 +17,7 @@ Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
 Source4:	%{name}.sysconfig
 Source5:	%{name}-jabber.alert
+Source6:	%{name}-clamd.monitor
 Patch0:		%{name}-ftp.patch
 URL:		http://www.kernel.org/software/mon/
 BuildRequires:	rpm-perlprov
@@ -116,7 +117,9 @@ install clients/monshow $RPM_BUILD_ROOT%{_bindir}
 install clients/skymon/skymon $RPM_BUILD_ROOT%{_bindir}
 install doc/*.1 	$RPM_BUILD_ROOT%{_mandir}/man1
 install doc/*.8 	$RPM_BUILD_ROOT%{_mandir}/man8
-install %{SOURCE5} alert.d/* 	$RPM_BUILD_ROOT%{_libdir}/mon/alert.d
+install %{SOURCE5}	$RPM_BUILD_ROOT%{_libdir}/mon/alert.d/jabber.alert
+install alert.d/* 	$RPM_BUILD_ROOT%{_libdir}/mon/alert.d
+install %{SOURCE6}	$RPM_BUILD_ROOT%{_libdir}/mon/mon.d/clamd.monitor
 install mon.d/*.monitor	$RPM_BUILD_ROOT%{_libdir}/mon/mon.d
 install etc/auth.cf 	$RPM_BUILD_ROOT%{_sysconfdir}/mon/auth.cf
 touch 			$RPM_BUILD_ROOT%{_sysconfdir}/mon/userfile
