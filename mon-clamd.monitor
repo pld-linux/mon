@@ -1,0 +1,133 @@
+#!/usr/bin/python
+
+# Przemysław Plewa
+# Arkadiusz Miśkiewicz
+
+import socket, struct, re, sys
+
+class ClamdTester:
+
+    def __init__ (self, host='localhost', port=3310, timeout=30):
+        self.host = host
+        self.port = port
+        self.error = ''
+        self.my_sock = ''
+        self.stream_sock = ''
+        self.stream_test_string = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+	self.timeout=timeout
+        
+    def clamd_socket_connect(self,host,port):
+        self.my_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.my_sock.setsockopt( socket.SOL_SOCKET, socket.SO_REUSEADDR, \
+            self.my_sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) | 1 )
+        self.my_sock.settimeout(self.timeout)
+        self.my_sock.connect((host,port))
+        
+    def stream_socket_connect(self,host,port):
+        self.stream_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.stream_sock.setsockopt( socket.SOL_SOCKET, socket.SO_REUSEADDR, \
+            self.stream_sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) | 1 )
+        self.stream_sock.settimeout(self.timeout)
+        self.stream_sock.connect((host,port))
+
+    def test_ping(self):
+        try:
+            self.clamd_socket_connect(self.host, self.port)
+        except Exception, e:
+            self.error = 'CLAMD:PING - %s'%str(e)
+            return None
+        self.my_sock.sendall('PING')
+        response = ' '
+        while response[len(response)-1] != '\n':
+            try:
+                response += self.my_sock.recv(100);
+            except Exception, e:
+		self.my_sock.close()
+		self.error = 'CLAMD:PING - exception(%s) :%s'%(str(self.timeout),str(e))
+                return None
+                
+        response = response.strip()
+        if response != 'PONG':
+            self.my_sock.close()
+            self.error = 'CLAMD:PING - unexpected response - [%s]'%str(response)
+            return None
+        self.my_sock.close()
+        return 'CLAMD:PING - OK'
+    
+    def test_stream(self):
+        try:
+            self.clamd_socket_connect(self.host, self.port)
+        except Exception, e:
+            self.error = 'CLAMD:STREAM -%s'%str(e)
+            return None
+        self.my_sock.sendall('STREAM')
+        response = ' '
+
+        while response[len(response)-1] != '\n':
+            try:
+                response += self.my_sock.recv(100);
+            except Exception, e:
+                self.my_sock.close()
+		self.error = 'CLAMD:STREAM - exception(%s) :%s'%(str(self.timeout),str(e))
+                return None
+        response = response.strip()
+        o = re.search('([0-9]{1,6})',response)
+        if o is None:
+            self.my_sock.close()
+            self.error = 'CLAMD:STREAM - unexpected response :%s'%(str(response))
+            return None
+            
+        # port do skanowania danych
+        newport = int(o.group(0))
+        try:
+            self.stream_socket_connect(self.host, newport)
+        except Exception, e:
+            self.my_sock.close()
+            self.error = 'CLAMD:STREAM (new output stream) -%s'%str(e)
+            return None
+        # wyslanie danych do skanowania
+        try:
+            self.stream_sock.sendall(self.stream_test_string)
+        except Exception, e:
+            self.error = 'CLAMD:STREAM - sending data to scan: %s'%(str(e))
+        self.stream_sock.close()
+        
+        #odczyt odpowiedzi
+        response = ' '
+        while response[len(response)-1] != '\n':
+            try:
+                response += self.my_sock.recv(100);
+            except Exception, e:
+                self.my_sock.close()
+                self.error = 'CLAMD:STREAM - timeout(%s) :%s'%(str(self.timeout),str(e))
+                return None
+
+        o = re.search('(stream: OK)',response)
+        if o is None:
+            self.my_sock.close()
+            self.error = 'CLAMD:STREAM - unexpected response :%s'%(str(response))
+            return None
+        self.my_sock.close()
+        return 'CLAMD:STREAM - OK' 
+
+if len(sys.argv) < 2:
+	print "clamd.monitor: no hosts specified"
+	sys.exit(1)
+
+problem = False
+for host in sys.argv[1:]:
+	cdt = ClamdTester(host=host,timeout=60)
+
+	result = cdt.test_ping()
+	if result is None:
+		problem = True
+		print host + ": " + cdt.error
+	else:
+		result = cdt.test_stream()
+		if result is None:
+			problem = True
+			print host + ": " + cdt.error
+if problem:
+	sys.exit(1)
+
+sys.exit(0)
