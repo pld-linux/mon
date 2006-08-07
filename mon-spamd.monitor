@@ -1,0 +1,92 @@
+#!/usr/bin/python
+
+import socket, struct, re, sys
+
+class SpamdTester:
+
+    def __init__ (self, host='localhost', port=783, timeout=30):
+        self.host = host
+        self.port = port
+        self.error = ''
+        self.my_sock = ''
+        self.stream_test_string = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\n'
+	self.timeout=timeout
+        
+    def spamd_socket_connect(self,host,port):
+        self.my_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.my_sock.setsockopt( socket.SOL_SOCKET, socket.SO_REUSEADDR, \
+            self.my_sock.getsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR) | 1 )
+        self.my_sock.settimeout(self.timeout)
+        self.my_sock.connect((host,port))
+        
+    def test_ping(self):
+        try:
+            self.spamd_socket_connect(self.host, self.port)
+        except Exception, e:
+            self.error = 'SPAMD:PING - %s'%str(e)
+            return None
+        self.my_sock.sendall('PING SPAMC/1.2\r\n')
+        response = ' '
+        while response[len(response)-1] != '\n':
+            try:
+                response += self.my_sock.recv(100);
+            except Exception, e:
+		self.my_sock.close()
+		self.error = 'SPAMD:PING - exception(%s) :%s'%(str(self.timeout),str(e))
+                return None
+                
+        response = response.strip()
+        if not response.endswith('PONG'):
+            self.my_sock.close()
+            self.error = 'SPAMD:PING - unexpected response - [%s]'%str(response)
+            return None
+        self.my_sock.close()
+        return 'SPAMD:PING - OK'
+    
+    def test_stream(self):
+        try:
+            self.spamd_socket_connect(self.host, self.port)
+        except Exception, e:
+            self.error = 'SPAMD:CHECK -%s'%str(e)
+            return None
+        self.my_sock.sendall('CHECK SPAMC/1.2\r\n')
+	self.my_sock.sendall('Content-length: %d\r\n\r\n' % len(self.stream_test_string))
+	self.my_sock.sendall(self.stream_test_string)
+        response = ' '
+
+        while response[len(response)-1] != '\n':
+            try:
+                response += self.my_sock.recv(100);
+            except Exception, e:
+                self.my_sock.close()
+		self.error = 'SPAMD:CHECK - exception(%s) :%s'%(str(self.timeout),str(e))
+                return None
+        response = response.strip()
+        o = re.search('EX_OK',response)
+        if o is None:
+            self.my_sock.close()
+            self.error = 'SPAMD:CHECK - unexpected response :%s'%(str(response))
+            return None
+        return 'SPAMD:CHECK - OK' 
+
+if len(sys.argv) < 2:
+	print "spamd.monitor: no hosts specified"
+	sys.exit(1)
+
+problem = False
+for host in sys.argv[1:]:
+	cdt = SpamdTester(host=host,timeout=60)
+
+	result = cdt.test_ping()
+	if result is None:
+		problem = True
+		print host + ": " + cdt.error
+	else:
+		result = cdt.test_stream()
+		if result is None:
+			problem = True
+			print host + ": " + cdt.error
+if problem:
+	sys.exit(1)
+
+sys.exit(0)
