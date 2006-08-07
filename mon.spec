@@ -18,6 +18,7 @@ Source3:	%{name}.init
 Source4:	%{name}.sysconfig
 Source5:	%{name}-jabber.alert
 Source6:	%{name}-clamd.monitor
+Source7:	%{name}-spamd.monitor
 Patch0:		%{name}-ftp.patch
 URL:		http://www.kernel.org/software/mon/
 BuildRequires:	rpm-perlprov
@@ -120,6 +121,7 @@ install doc/*.8 	$RPM_BUILD_ROOT%{_mandir}/man8
 install %{SOURCE5}	$RPM_BUILD_ROOT%{_libdir}/mon/alert.d/jabber.alert
 install alert.d/* 	$RPM_BUILD_ROOT%{_libdir}/mon/alert.d
 install %{SOURCE6}	$RPM_BUILD_ROOT%{_libdir}/mon/mon.d/clamd.monitor
+install %{SOURCE7}      $RPM_BUILD_ROOT%{_libdir}/mon/mon.d/spamd.monitor
 install mon.d/*.monitor	$RPM_BUILD_ROOT%{_libdir}/mon/mon.d
 install etc/auth.cf 	$RPM_BUILD_ROOT%{_sysconfdir}/mon/auth.cf
 touch 			$RPM_BUILD_ROOT%{_sysconfdir}/mon/userfile
