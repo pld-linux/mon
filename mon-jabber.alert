@@ -1,5 +1,6 @@
 #!/usr/bin/python -u
-# arekm@pld-linux.org, 01/2006
+# arekm@pld-linux.org, 2006-01
+# glen@pld-linux.org,arekm@pld-linux.org, 2006-10-30 - added ssl support (for gmail.com)
 # usage:
 # jabber.alert -J from_jid -P password to_jid1 to_jid2 to_jid3
 
@@ -13,6 +14,7 @@ import time
 from pyxmpp.jid import JID
 from pyxmpp.message import Message
 from pyxmpp.jabber.client import JabberClient
+from pyxmpp.streamtls import TLSSettings
 
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "s:o:g:h:k:t:J:P:OTu")
@@ -116,7 +118,8 @@ class Client(JabberClient):
 			msg=Message(to_jid=jid_r, body=body, subject=subject, stanza_type=message_type)
 			self.stream.send(msg)
 		self.disconnect()
-c=Client(jid,password,server=server,port=port)
+
+c = Client(jid, password, server = server, port = port, auth_methods = ['sasl:PLAIN'], tls_settings = TLSSettings(require = True, verify_peer = False))
 c.connect()
 try:
 	c.loop(1)
