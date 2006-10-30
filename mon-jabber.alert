@@ -120,7 +120,7 @@ c=Client(jid,password,server=server,port=port)
 c.connect()
 try:
 	c.loop(1)
-except:
+except Exception, e:
 	print "problem: %s" % e
 	c.disconnect()
 c.disconnect()
