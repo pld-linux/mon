@@ -7,7 +7,7 @@ Summary(pt_BR):	MonitoraГЦo de recursos
 Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
 Version:	1.1.0
-Release:	0.%{_rc}.4
+Release:	0.%{_rc}.5
 License:	GPL
 Group:		Applications/System
 Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/devel/%{name}-%{version}%{_rc}.tar.bz2
@@ -20,6 +20,7 @@ Source5:	%{name}-jabber.alert
 Source6:	%{name}-clamd.monitor
 Source7:	%{name}-spamd.monitor
 Patch0:		%{name}-ftp.patch
+Patch1:		%{name}-msql-mysql-timeout.patch
 URL:		http://www.kernel.org/software/mon/
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -91,6 +92,7 @@ faz o mon ser facilmente estendido.
 %prep
 %setup -q -n %{name}-%{version}%{_rc}
 %patch0 -p1
+%patch1 -p1
 
 find -name CVS -type d | xargs rm -rf
 
