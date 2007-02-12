@@ -1,10 +1,10 @@
 %include	/usr/lib/rpm/macros.perl
 %define	_rc	pre1
 Summary:	A general-purpose resource monitoring system
-Summary(es):	VerificaciСn de recursos
-Summary(pl):	System monitorowania zasobСw ogСlnego przeznaczenia
-Summary(pt_BR):	MonitoraГЦo de recursos
-Summary(ru):	"mon" - инструмент для мониторинга доступности сервисов
+Summary(es.UTF-8):   VerificaciцЁn de recursos
+Summary(pl.UTF-8):   System monitorowania zasobцЁw ogцЁlnego przeznaczenia
+Summary(pt_BR.UTF-8):   Monitoraц╖цёo de recursos
+Summary(ru.UTF-8):   "mon" - п╦п╫я│я┌я─я┐п╪п╣п╫я┌ п╢п╩я▐ п╪п╬п╫п╦я┌п╬я─п╦п╫пЁп╟ п╢п╬я│я┌я┐п©п╫п╬я│я┌п╦ я│п╣я─п╡п╦я│п╬п╡
 Name:		mon
 Version:	1.1.0
 Release:	0.%{_rc}.5
@@ -42,52 +42,52 @@ the distribution comes with a handful of them to get you started. This
 means that if a new service needs monitoring, or if a new alert is
 required, the mon server will not need to be changed.
 
-%description -l es
-VerificaciСn de recursos.
+%description -l es.UTF-8
+VerificaciцЁn de recursos.
 
-%description -l pl
-mon jest systemem monitorowania zasobСw ogСlnego przeznaczenia. Mo©e
-byФ u©ywany do monitorowania dostЙpno╤ci sieci, problemСw z serwerem,
-warunkСw ╤rodowiska (np. temperatury) i innych. Mo©e byФ u©ywany do
-sprawdzania warunkСw i/lub uruchamiania jakiej╤ akcji po wykryciu
-awarii. Akcje te s╠ podejmowane przez uruchamianie oddzielnych
-programСw.
+%description -l pl.UTF-8
+mon jest systemem monitorowania zasobцЁw ogцЁlnego przeznaczenia. Moе╪e
+byд┤ uе╪ywany do monitorowania dostд≥pnoе⌡ci sieci, problemцЁw z serwerem,
+warunkцЁw е⌡rodowiska (np. temperatury) i innych. Moе╪e byд┤ uе╪ywany do
+sprawdzania warunkцЁw i/lub uruchamiania jakiejе⌡ akcji po wykryciu
+awarii. Akcje te sд┘ podejmowane przez uruchamianie oddzielnych
+programцЁw.
 
-mon jest rozszerzalny. Monitory i alarmy nie s╠ czЙ╤ci╠ mona, ale
-dystrybucja zawiera pewien ich zestaw na pocz╠tek. To znaczy, ©e
-je©eli nowa usЁuga potrzebuje monitorowania lub potrzebny jest nowy
-alarm, serwer mon nie musi byФ zmieniany.
+mon jest rozszerzalny. Monitory i alarmy nie sд┘ czд≥е⌡ciд┘ mona, ale
+dystrybucja zawiera pewien ich zestaw na poczд┘tek. To znaczy, е╪e
+jeе╪eli nowa usе┌uga potrzebuje monitorowania lub potrzebny jest nowy
+alarm, serwer mon nie musi byд┤ zmieniany.
 
-%description -l pt_BR
-Mon И um sistema de propСsito geral para monitoraГЦo de recursos, o
-qual pode ser usado para monitorar a disponibilidade de serviГos de
-uma rede, problemas em servidores, condiГУes ambientais, etc
+%description -l pt_BR.UTF-8
+Mon ц╘ um sistema de propцЁsito geral para monitoraц╖цёo de recursos, o
+qual pode ser usado para monitorar a disponibilidade de serviц╖os de
+uma rede, problemas em servidores, condiц╖ц╣es ambientais, etc
 
-A monitoraГЦo de recursos pode ser vista como duas tarefas separadas:
-o teste de uma condiГЦo e a aГЦo a ser tomada em caso de falha. O mon
+A monitoraц╖цёo de recursos pode ser vista como duas tarefas separadas:
+o teste de uma condiц╖цёo e a aц╖цёo a ser tomada em caso de falha. O mon
 foi projetado para fazer estas duas duas tarefas separadas usando
 programas independentes, e foi implementado como um escalonador que
-executa os monitores (que testam uma condiГЦo), e chama os alertas
+executa os monitores (que testam uma condiц╖цёo), e chama os alertas
 apropriados se o monitor falhar.
 
-Monitores e alertas nЦo fazem parte do mon, apesar de que uma sИrie
-deles vem neste pacote, sendo Зteis para comeГar a usА-lo. Isto
-significa que se um novo serviГo necessita de monitoraГЦo, ou se um
-novo alerta И requerido, o servidor mon nЦo precisa ser alterado. Isto
+Monitores e alertas nцёo fazem parte do mon, apesar de que uma sц╘rie
+deles vem neste pacote, sendo ц╨teis para comeц╖ar a usц║-lo. Isto
+significa que se um novo serviц╖o necessita de monitoraц╖цёo, ou se um
+novo alerta ц╘ requerido, o servidor mon nцёo precisa ser alterado. Isto
 faz o mon ser facilmente estendido.
 
-%description -l ru
-"mon" - инструмент для мониторинга доступности сервисов. Сервисы могут
-быть сетевыми, состоянием окружения, или чем угодно похожим, что можно
-протестировать программно. Он чрезвычайно полезен для системных
-администраторов, но не ограничивается использованием только ими. Он
-разработан как основная система оповещения об авариях, разделяя задачи
-тестирования сервисов на доступность и отправку тревожных сообщений,
-когда что-то не работает. Для достижения этого "mon" реализован как
-диспетчер, который запускает программы, которые выполняют
-тестирование, и запускает программы предупреждения, когда скрипты
-обнаруживают сбои. Ни один из сервисов не обрабатывается собственно
-"mon"'ом. Эти функции обрабатываются соответствующими программами.
+%description -l ru.UTF-8
+"mon" - п╦п╫я│я┌я─я┐п╪п╣п╫я┌ п╢п╩я▐ п╪п╬п╫п╦я┌п╬я─п╦п╫пЁп╟ п╢п╬я│я┌я┐п©п╫п╬я│я┌п╦ я│п╣я─п╡п╦я│п╬п╡. п║п╣я─п╡п╦я│я▀ п╪п╬пЁя┐я┌
+п╠я▀я┌я▄ я│п╣я┌п╣п╡я▀п╪п╦, я│п╬я│я┌п╬я▐п╫п╦п╣п╪ п╬п╨я─я┐п╤п╣п╫п╦я▐, п╦п╩п╦ я┤п╣п╪ я┐пЁп╬п╢п╫п╬ п©п╬я┘п╬п╤п╦п╪, я┤я┌п╬ п╪п╬п╤п╫п╬
+п©я─п╬я┌п╣я│я┌п╦я─п╬п╡п╟я┌я▄ п©я─п╬пЁя─п╟п╪п╪п╫п╬. п·п╫ я┤я─п╣п╥п╡я▀я┤п╟п╧п╫п╬ п©п╬п╩п╣п╥п╣п╫ п╢п╩я▐ я│п╦я│я┌п╣п╪п╫я▀я┘
+п╟п╢п╪п╦п╫п╦я│я┌я─п╟я┌п╬я─п╬п╡, п╫п╬ п╫п╣ п╬пЁя─п╟п╫п╦я┤п╦п╡п╟п╣я┌я│я▐ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ я┌п╬п╩я▄п╨п╬ п╦п╪п╦. п·п╫
+я─п╟п╥я─п╟п╠п╬я┌п╟п╫ п╨п╟п╨ п╬я│п╫п╬п╡п╫п╟я▐ я│п╦я│я┌п╣п╪п╟ п╬п©п╬п╡п╣я┴п╣п╫п╦я▐ п╬п╠ п╟п╡п╟я─п╦я▐я┘, я─п╟п╥п╢п╣п╩я▐я▐ п╥п╟п╢п╟я┤п╦
+я┌п╣я│я┌п╦я─п╬п╡п╟п╫п╦я▐ я│п╣я─п╡п╦я│п╬п╡ п╫п╟ п╢п╬я│я┌я┐п©п╫п╬я│я┌я▄ п╦ п╬я┌п©я─п╟п╡п╨я┐ я┌я─п╣п╡п╬п╤п╫я▀я┘ я│п╬п╬п╠я┴п╣п╫п╦п╧,
+п╨п╬пЁп╢п╟ я┤я┌п╬-я┌п╬ п╫п╣ я─п╟п╠п╬я┌п╟п╣я┌. п■п╩я▐ п╢п╬я│я┌п╦п╤п╣п╫п╦я▐ я█я┌п╬пЁп╬ "mon" я─п╣п╟п╩п╦п╥п╬п╡п╟п╫ п╨п╟п╨
+п╢п╦я│п©п╣я┌я┤п╣я─, п╨п╬я┌п╬я─я▀п╧ п╥п╟п©я┐я│п╨п╟п╣я┌ п©я─п╬пЁя─п╟п╪п╪я▀, п╨п╬я┌п╬я─я▀п╣ п╡я▀п©п╬п╩п╫я▐я▌я┌
+я┌п╣я│я┌п╦я─п╬п╡п╟п╫п╦п╣, п╦ п╥п╟п©я┐я│п╨п╟п╣я┌ п©я─п╬пЁя─п╟п╪п╪я▀ п©я─п╣п╢я┐п©я─п╣п╤п╢п╣п╫п╦я▐, п╨п╬пЁп╢п╟ я│п╨я─п╦п©я┌я▀
+п╬п╠п╫п╟я─я┐п╤п╦п╡п╟я▌я┌ я│п╠п╬п╦. п²п╦ п╬п╢п╦п╫ п╦п╥ я│п╣я─п╡п╦я│п╬п╡ п╫п╣ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟п╣я┌я│я▐ я│п╬п╠я│я┌п╡п╣п╫п╫п╬
+"mon"'п╬п╪. п╜я┌п╦ я└я┐п╫п╨я├п╦п╦ п╬п╠я─п╟п╠п╟я┌я▀п╡п╟я▌я┌я│я▐ я│п╬п╬я┌п╡п╣я┌я│я┌п╡я┐я▌я┴п╦п╪п╦ п©я─п╬пЁя─п╟п╪п╪п╟п╪п╦.
 
 %prep
 %setup -q -n %{name}-%{version}%{_rc}
