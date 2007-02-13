@@ -1,10 +1,10 @@
 %include	/usr/lib/rpm/macros.perl
 %define	_rc	pre1
 Summary:	A general-purpose resource monitoring system
-Summary(es.UTF-8):   Verificación de recursos
-Summary(pl.UTF-8):   System monitorowania zasobów ogólnego przeznaczenia
-Summary(pt_BR.UTF-8):   Monitoração de recursos
-Summary(ru.UTF-8):   "mon" - инструмент для мониторинга доступности сервисов
+Summary(es.UTF-8):	Verificación de recursos
+Summary(pl.UTF-8):	System monitorowania zasobów ogólnego przeznaczenia
+Summary(pt_BR.UTF-8):	Monitoração de recursos
+Summary(ru.UTF-8):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
 Version:	1.1.0
 Release:	0.%{_rc}.5
