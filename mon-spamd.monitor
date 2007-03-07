@@ -27,9 +27,12 @@ class SpamdTester:
             return None
         self.my_sock.sendall('PING SPAMC/1.2\r\n')
         response = ' '
-        while response[len(response)-1] != '\n':
+	while 1:
             try:
-                response += self.my_sock.recv(100);
+                ret = self.my_sock.recv(128)
+		response += ret
+		if not ret or ret.find('\n'):
+			break
             except Exception, e:
 		self.my_sock.close()
 		self.error = 'SPAMD:PING - exception(%s) :%s'%(str(self.timeout),str(e))
@@ -54,9 +57,12 @@ class SpamdTester:
 	self.my_sock.sendall(self.stream_test_string)
         response = ' '
 
-        while response[len(response)-1] != '\n':
+	while 1:
             try:
-                response += self.my_sock.recv(100);
+                ret = self.my_sock.recv(100);
+		response += ret
+		if not ret or ret.find('\n'):
+			break
             except Exception, e:
                 self.my_sock.close()
 		self.error = 'SPAMD:CHECK - exception(%s) :%s'%(str(self.timeout),str(e))

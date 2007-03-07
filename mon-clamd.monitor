@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: UTF-8 -*-
 
 # Przemysław Plewa
 # Arkadiusz Miśkiewicz
@@ -38,9 +39,12 @@ class ClamdTester:
             return None
         self.my_sock.sendall('PING')
         response = ' '
-        while response[len(response)-1] != '\n':
+	while 1:
             try:
-                response += self.my_sock.recv(100);
+                ret = self.my_sock.recv(128);
+		response += ret
+		if not ret or ret.find('\n'):
+			break
             except Exception, e:
 		self.my_sock.close()
 		self.error = 'CLAMD:PING - exception(%s) :%s'%(str(self.timeout),str(e))
@@ -63,9 +67,12 @@ class ClamdTester:
         self.my_sock.sendall('STREAM')
         response = ' '
 
-        while response[len(response)-1] != '\n':
+	while 1:
             try:
-                response += self.my_sock.recv(100);
+                ret = self.my_sock.recv(128)
+		response += ret
+		if not ret or ret.find('\n'):
+			break
             except Exception, e:
                 self.my_sock.close()
 		self.error = 'CLAMD:STREAM - exception(%s) :%s'%(str(self.timeout),str(e))
@@ -94,9 +101,13 @@ class ClamdTester:
         
         #odczyt odpowiedzi
         response = ' '
-        while response[len(response)-1] != '\n':
+	while 1:
             try:
-                response += self.my_sock.recv(100);
+                ret = self.my_sock.recv(128);
+		response += ret
+		if not ret or ret.find('\n'):
+			break
+		response += ret
             except Exception, e:
                 self.my_sock.close()
                 self.error = 'CLAMD:STREAM - timeout(%s) :%s'%(str(self.timeout),str(e))
