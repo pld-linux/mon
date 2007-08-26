@@ -6,12 +6,12 @@ Summary(pl.UTF-8):	System monitorowania zasobów ogólnego przeznaczenia
 Summary(pt_BR.UTF-8):	Monitoração de recursos
 Summary(ru.UTF-8):	"mon" - инструмент для мониторинга доступности сервисов
 Name:		mon
-Version:	1.1.0
-Release:	0.%{_rc}.5
+Version:	1.2.0
+Release:	1
 License:	GPL
 Group:		Applications/System
-Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/devel/%{name}-%{version}%{_rc}.tar.bz2
-# Source0-md5:	cec4079e8bcb8461e6c876c89cf2a01f
+Source0:	ftp://ftp.kernel.org/pub/software/admin/mon/%{name}-%{version}.tar.gz
+# Source0-md5:	668e7cec8c8be95e81df7a48c2c322cb
 Source1:	%{name}-%{name}.cf
 Source2:	%{name}-%{name}.cgi
 Source3:	%{name}.init
@@ -19,9 +19,7 @@ Source4:	%{name}.sysconfig
 Source5:	%{name}-jabber.alert
 Source6:	%{name}-clamd.monitor
 Source7:	%{name}-spamd.monitor
-Patch0:		%{name}-ftp.patch
-Patch1:		%{name}-msql-mysql-timeout.patch
-URL:		http://www.kernel.org/software/mon/
+URL:		http://mon.wiki.kernel.org/
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	sed >= 4.0
@@ -90,9 +88,7 @@ faz o mon ser facilmente estendido.
 "mon"'ом. Эти функции обрабатываются соответствующими программами.
 
 %prep
-%setup -q -n %{name}-%{version}%{_rc}
-%patch0 -p1
-%patch1 -p1
+%setup -q
 
 find -name CVS -type d | xargs rm -rf
 
