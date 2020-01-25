@@ -1,4 +1,3 @@
-%include	/usr/lib/rpm/macros.perl
 %define	_rc	pre1
 Summary:	A general-purpose resource monitoring system
 Summary(es.UTF-8):	Verificación de recursos
